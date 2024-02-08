@@ -1,5 +1,5 @@
 import os
-import multiprocessing as Pool
+import multiprocessing as mp
 import subprocess as sub
 
 #def convert_to_acc(input_file, output_file):
@@ -24,3 +24,4 @@ if __name__ == "__main__":
         
         convert_to_mp3(input_file, output_file)
 
+#usar multiprocessing!
