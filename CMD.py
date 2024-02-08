@@ -19,35 +19,3 @@ if __name__ == "__main__":
         
         convert_to_mp3(input_file, output_file)
 
-   # if not os.path.exists(input_file):
-      #  print("Input file does not exist.")
- #  else:
-     #   convert_to_mp3(input_file, output_file)
-    #    print("Conversion completed successfully.")
-
-
-
-
-
-'''
-path_folder1 = input("Ingresa el directorio: ")
-path_folder2 = input("Ingresa la carpeta de destino: ")
-
-sub.call(['ffmpeg', '-i', path_folder1, path_folder2])
-'''
-
-
-'''
-ext = input("Ingresa la extensión que quieres cambiar: ")
-newExt = input("Ingresa el nuevo formato: ")
-
-for filename in os.listdir(path_folder):
-    if filename.endswith("." + ext):
-        old_path = os.path.join(path_folder, filename)
-        new_path = os.path.join(path_folder, os.path.splitext(filename)[0] + "." + newExt)
-        print(old_path)
-        print(new_path)
-
-        os.rename(old_path, new_path)
-print(f"Se cambiaron los archivos con la extension '{ext}' a '{newExt}' en la carpeta {path_folder}.")
-'''
