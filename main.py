@@ -1,28 +1,28 @@
-import multiprocessing
+# main.py
+
+import os
 import time
 
-def incrementar_contador(contador, lock, proceso_id):
-    for _ in range(10):
-        with lock:
-            contador.value += 1
-        print(f"Proceso {proceso_id}: Incremento en 1, Contador actual: {contador.value}")
-        time.sleep(1)
+from musicConverter import MusicConverter
+from parallelConverter import ParallelConverter
+
 
 if __name__ == "__main__":
-    # Crear un contador compartido y un lock
-    contador = multiprocessing.Value('i', 0)
-    lock = multiprocessing.Lock()
+    path_folder = input("Enter the path folder:")
+    output_folder = input("Enter the output folder: ")
 
-    # Crear dos procesos
-    proceso1 = multiprocessing.Process(target=incrementar_contador, args=(contador, lock, 1))
-    proceso2 = multiprocessing.Process(target=incrementar_contador, args=(contador, lock, 2))
+    music_converter = MusicConverter(output_folder)
+    parallel_converter = ParallelConverter(music_converter)
 
-    # Iniciar los procesos
-    proceso1.start()
-    proceso2.start()
-
-    # Esperar a que ambos procesos terminenn
-    proceso1.join()
-    proceso2.join()
-
-    print("Contador final:", contador.value)
+    inicio = time.time()
+    
+    for filename in os.listdir(path_folder):
+        if not os.path.exists(path_folder):
+            print("input file doesn't exist")
+        else:
+            input_file = os.path.join(path_folder, filename)
+            parallel_converter.convert(input_file)
+    
+    fin = time.time()
+    tiempo_transcurrido = fin - inicio
+    print("La tarea tardó {} segundos en completarse.".format(tiempo_transcurrido))
