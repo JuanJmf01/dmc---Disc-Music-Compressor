@@ -1,16 +1,14 @@
-# musicConverter.py
-
+#musicConverter.py
 import subprocess as sub
-
 # The `MusicConverter` class provides methods to convert audio files to AAC and MP3 formats using
-# FFmpeg.
+# FFmpeg. FFmpeg docs about video and audio conversion "https://ffmpeg.org/ffmpeg.html#toc-Video-and-Audio-file-format-conversion"
+
 class MusicConverter:
     def __init__(self, output_folder):
         self.output_folder = output_folder
 
     def convertAcc(self, input_file, output_file):
         
-
         """
         The function converts an audio file to AAC format using FFmpeg.
         
@@ -19,12 +17,11 @@ class MusicConverter:
         :param output_file: The `output_file` parameter is the name or path of the file where you want
         to save the converted audio file
         """
-
-    
         command = ['ffmpeg', '-i', input_file, '-codec:a', 'aac', output_file]
         sub.run(command)
         
     def convertmp3(self, input_file, output_file):
+
         """
         The function converts an input audio file to MP3 format using the ffmpeg library.
         
@@ -35,4 +32,5 @@ class MusicConverter:
         """
         command = ['ffmpeg', '-i', input_file, '-codec:a', 'libmp3lame', '-qscale:a', '2', output_file]
         sub.run(command)
+        
         
