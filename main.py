@@ -4,40 +4,38 @@ import time
 from musicConverter import MusicConverter
 from parallelConverter import ParallelConverter
 import time
-def WorkInFile(path_folder,output_folder):
-    coreCount = os.cpu_count()
-    music_converter = MusicConverter(output_folder)
-    parallel_converter = ParallelConverter(music_converter)
-    input_files = []
+def WorkInFile(path_folder,output_folder): # Trabajo en archivos (Conversion)
+    coreCount = os.cpu_count() 
+    music_converter = MusicConverter(output_folder) # Ubicacion Entrada
+    parallel_converter = ParallelConverter(music_converter) # Ubicacion Salida
+    input_files = [] # Vector para proxima revision y conversion de archivos
     if os.path.isdir(path_folder):
         inicio = time.time()
-        dir_list = os.listdir(path_folder)# es un directorio. 
+        dir_list = os.listdir(path_folder)# Revision de un directorio. 
         for filename in dir_list:
             input_files.append(os.path.join(path_folder, filename))
-     # Pass the list of input files to the convert method
-    elif os.path.isfile(path_folder): # Es un
+    elif os.path.isfile(path_folder): # Es de un  archivo.
         inicio = time.time()
-        input_files.append(path_folder)
-        # es un archivo.
+        input_files.append(path_folder)       
     
-    #Simple list 
+    # Conversion en Paralelo
     parallel_converter.convert(input_files)
 
     fin = time.time() # El tiempo ha finalizado
     tiempo_transcurrido = fin - inicio # Calculo de tiempo transcurrido
     print("La tarea tardó {} segundos en completarse y la cantidad de cores encontrada fue de {}".format(tiempo_transcurrido, coreCount))
 
-def ReadFile(path_folder):
+def ReadFile(path_folder): # Lectura de archivos
     print("Archivos encontrado(s):")
 
     if os.path.isdir(path_folder):
-        print(f"{path_folder}") # es un directorio.
+        print(f"{path_folder}") # Revision de un directorio.
         dir_list = os.listdir(path_folder)
         input_files = [os.path.join(path_folder, filename) for filename in dir_list]
         for file_path in input_files:
             print((file_path)+"\n")
     elif os.path.isfile(path_folder):
-        print(path_folder+"\n") # es un archivo.
+        print(path_folder+"\n") # Revision de un archivo.
 
     
         
