@@ -8,7 +8,6 @@ class ParallelConverter:
         self.music_converter = music_converter
 
     def convert(self, input_files):
-
         """
         A process pool object which controls a pool of worker processes to which jobs can be submitted. 
         It supports asynchronous results with timeouts and callbacks and has a parallel map implementation.
