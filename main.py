@@ -69,3 +69,38 @@ if __name__ == "__main__":
     end_time = time.time()
     elapsed_time = end_time - start_time
     print("La tarea tardó {} segundos en completarse y la cantidad de cores encontrada fue de {}".format(elapsed_time, core_count))
+
+    # Seleccion de archivo que quiere dejar
+    fileCuantity = len(os.listdir(output_folder))
+    print("la cantidad de archivos convertidos fue de:",fileCuantity)
+    temp = os.listdir(output_folder)
+    mp3Quantity = 0
+    aacCuantity = 0
+    mp3TotalSize = 0
+    aacTotalSize= 0
+    for file in temp:
+        file_path = os.path.join(output_folder, file)
+        if os.path.isfile(file_path):
+            file_size = os.path.getsize(file_path)
+            file_extension = os.path.splitext(file)[1]
+            if file_extension == '.mp3':
+                mp3Quantity += 1
+                mp3TotalSize += file_size
+            elif file_extension == '.aac':
+                aacCuantity += 1
+                aacTotalSize += file_size
+            else:
+                print("No file found:", file)
+    print("Cantidad de archivos mp3:{} cantidad de archivos aac:{}".format(mp3Quantity,aacCuantity))
+    print("La peso de los archivos de mp3 es de: {} bytes y el peso de los archivos aac es de: {}bytes".format(mp3TotalSize,aacTotalSize))
+
+    keep_mp3 = input("Do you want to keep MP3 files? (yes/no): ").lower().strip() == 'yes'
+    keep_aac = input("Do you want to keep AAC files? (yes/no): ").lower().strip() == 'yes'
+    for file in temp:
+        file_path = os.path.join(output_folder, file)
+        file_extension = os.path.splitext(file)[1]
+        if file_extension == '.mp3' and not keep_mp3:
+            os.remove(file_path)
+        elif file_extension == '.aac' and not keep_aac:
+            os.remove(file_path)
+    print("Operation completed")
