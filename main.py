@@ -76,9 +76,9 @@ if __name__ == "__main__":
     print("la cantidad de archivos convertidos fue de:",fileCuantity)
     temp = os.listdir(output_folder)
     mp3Quantity = 0
-    aacCuantity = 0
+    oggCuantity = 0
     mp3TotalSize = 0
-    aacTotalSize= 0
+    oggTotalSize= 0
     for file in temp:
         file_path = os.path.join(output_folder, file)
         if os.path.isfile(file_path):
@@ -87,21 +87,21 @@ if __name__ == "__main__":
             if file_extension == '.mp3':
                 mp3Quantity += 1
                 mp3TotalSize += file_size
-            elif file_extension == '.aac':
-                aacCuantity += 1
-                aacTotalSize += file_size
+            elif file_extension == '.ogg':
+                oggCuantity += 1
+                oggTotalSize += file_size
             else:
                 print("No file found:", file)
-    print("Cantidad de archivos mp3:{} cantidad de archivos aac:{}".format(mp3Quantity,aacCuantity))
-    print("El peso de los archivos de mp3 es de: {} bytes y el peso de los archivos aac es de: {}bytes".format(mp3TotalSize,aacTotalSize))
+    print("Cantidad de archivos mp3:{} cantidad de archivos ogg:{}".format(mp3Quantity,oggCuantity))
+    print("El peso de los archivos de mp3 es de: {} bytes y el peso de los archivos ogg es de: {}bytes".format(mp3TotalSize,oggTotalSize))
 
     keep_mp3 = input("Do you want to keep MP3 files? (yes/no): ").lower().strip() == 'yes'
-    keep_aac = input("Do you want to keep AAC files? (yes/no): ").lower().strip() == 'yes'
+    keep_ogg = input("Do you want to keep OGG files? (yes/no): ").lower().strip() == 'yes'
     for file in temp:
         file_path = os.path.join(output_folder, file)
         file_extension = os.path.splitext(file)[1]
         if file_extension == '.mp3' and not keep_mp3:
             os.remove(file_path)
-        elif file_extension == '.aac' and not keep_aac:
+        elif file_extension == '.ogg' and not keep_ogg:
             os.remove(file_path)
     print("Operation completed")

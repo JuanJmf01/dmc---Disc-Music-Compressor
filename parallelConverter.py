@@ -1,6 +1,8 @@
 #parallelConverter.py
 import os
 import multiprocessing as mp
+# The `ParallelConverter` class takes a `music_converter` object and converts input music files to
+# both MP3 and OGG formats in parallel using multiprocessing.
 
 class ParallelConverter:
 
@@ -9,45 +11,40 @@ class ParallelConverter:
 
     def convert(self, input_files):
         """
-        A process pool object which controls a pool of worker processes to which jobs can be submitted. 
-        It supports asynchronous results with timeouts and callbacks and has a parallel map implementation.
-        library link : https://docs.python.org/3/library/multiprocessing.html
-        Find the amount of cores the cpu has and then we use the multiprocessing.Pool this allows us to create a pool of processes.
+        The `convert` function takes a list of input files, extracts their base filenames, generates
+        output file paths for both mp3 and ogg formats, and then uses multiprocessing to convert the
+        input files to mp3 and ogg formats.
+        
+        :param input_files: The `convert` method you provided seems to be converting input music files
+        to both MP3 and OGG formats using multiprocessing. The `input_files` parameter in this method
+        should be a list of input music files that you want to convert
         """
-        #The cpu count and the pool method are instanciated here.
+     
         cpuCount = os.cpu_count()
         process = mp.Pool(cpuCount)
-        #Tuples
-        '''Create the tuples for each file in files(The files that are found in the directory thats passed by the user) so that we can then
-            pass this tuple to the convertAac and convertmp3 in the musicConverter and encode each file in parallel using the pool function and the starmap from multiprocessing
-            allowing us to send the tuples as arguments to the function.
-        '''
-        # Create a list of tuples containing input and output file paths
+       
         output_files = []
+        # This part of the code is iterating over each input file in the `input_files` list. For each
+        # file, it extracts the filename and extension using `os.path.splitext(file)`. Then, it gets
+        # the base filename using `os.path.basename(filename)`.
         for file in input_files:
             filename, ext = os.path.splitext(file)
             base_filename = os.path.basename(filename)
             output_file_mp3 = os.path.join(self.music_converter.output_folder, base_filename + ".mp3")
-            output_file_aac = os.path.join(self.music_converter.output_folder, base_filename + ".aac")
+            output_file_ogg = os.path.join(self.music_converter.output_folder, base_filename + ".ogg")
             output_files.append((file, output_file_mp3))
-            output_files.append((file, output_file_aac))
+            output_files.append((file, output_file_ogg))
         
 
         print("outputs : {}".format(output_files))
  
-        '''
-        Arguments to be passed to the convertmp3 and convertAcc functions in musicConverter.
-        The starmap method from multiprocessing is used to execute the functions convertMp3 and convertAAC like the mp.Process and mp.start but it also allows
-        for each method to run in parallel across multiple processes with each handling a different conversion task so for each starmap we pass the tuple containing all the input files and all the output files 
-        '''
-        #process.starmap(self.music_converter.convertmp3, mp3Output)
-        #process.starmap(self.music_converter.convertAcc, aacOutput)
+      
+        # `process.starmap(self.music_converter.convert_file, output_files)` is using the `starmap`
+        # method of the `Pool` object to apply the `self.music_converter.convert_file` function to
+        # each pair of arguments in the `output_files` list.
         process.starmap(self.music_converter.convert_file, output_files)
 
-        '''
-        this methods are used by pool, close is used to not allow anymore workers into the pool and join is used to wait for any worker process in the pool
-        to have completed their task and end
-        '''
+     
         
         process.close()
         process.join()
