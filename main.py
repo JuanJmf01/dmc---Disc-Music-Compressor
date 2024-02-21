@@ -1,4 +1,5 @@
 # main.py
+# ffmpeg
 import os
 import time
 from tkinter import filedialog, Tk
@@ -92,7 +93,7 @@ if __name__ == "__main__":
             else:
                 print("No file found:", file)
     print("Cantidad de archivos mp3:{} cantidad de archivos aac:{}".format(mp3Quantity,aacCuantity))
-    print("La peso de los archivos de mp3 es de: {} bytes y el peso de los archivos aac es de: {}bytes".format(mp3TotalSize,aacTotalSize))
+    print("El peso de los archivos de mp3 es de: {} bytes y el peso de los archivos aac es de: {}bytes".format(mp3TotalSize,aacTotalSize))
 
     keep_mp3 = input("Do you want to keep MP3 files? (yes/no): ").lower().strip() == 'yes'
     keep_aac = input("Do you want to keep AAC files? (yes/no): ").lower().strip() == 'yes'
