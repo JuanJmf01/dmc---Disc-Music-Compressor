@@ -62,46 +62,67 @@ if __name__ == "__main__":
     if 'output' in dir_list:
         dir_list.remove('output')
 
-    start_time = time.time()
 
+
+    start_time = time.time()
 
     parallel_converter.convert(dir_list)
 
     end_time = time.time()
-    elapsed_time = end_time - start_time
-    print("La tarea tardó {} segundos en completarse y la cantidad de cores encontrada fue de {}".format(elapsed_time, core_count))
 
-    # Seleccion de archivo que quiere dejar
-    fileCuantity = len(os.listdir(output_folder))
-    print("la cantidad de archivos convertidos fue de:",fileCuantity)
-    temp = os.listdir(output_folder)
+
+
+    elapsed_time = end_time - start_time
+    print("\nLa tarea tardó {} segundos en completarse".format(round(elapsed_time)))
+    print("la cantidad de cores encontrada fue de {}".format(core_count))
+
+    # Información sobre los archivos convertidos
+    fileQuantity = len(os.listdir(output_folder))
+    print("\nLa cantidad total de archivos convertidos es:", fileQuantity)
+
+    # Contadores para archivos MP3 y OGG
     mp3Quantity = 0
-    oggCuantity = 0
+    oggQuantity = 0
     mp3TotalSize = 0
-    oggTotalSize= 0
-    for file in temp:
+    oggTotalSize = 0
+
+    # Calcular la cantidad y tamaño total de archivos MP3 y OGG
+    for file in os.listdir(output_folder):
         file_path = os.path.join(output_folder, file)
         if os.path.isfile(file_path):
-            file_size = os.path.getsize(file_path)
+            file_size = os.path.getsize(file_path) / (1024 * 1024) # Convertir bytes a MB
             file_extension = os.path.splitext(file)[1]
             if file_extension == '.mp3':
                 mp3Quantity += 1
                 mp3TotalSize += file_size
             elif file_extension == '.ogg':
-                oggCuantity += 1
+                oggQuantity += 1
                 oggTotalSize += file_size
             else:
-                print("No file found:", file)
-    print("Cantidad de archivos mp3:{} cantidad de archivos ogg:{}".format(mp3Quantity,oggCuantity))
-    print("El peso de los archivos de mp3 es de: {} bytes y el peso de los archivos ogg es de: {}bytes".format(mp3TotalSize,oggTotalSize))
+                print("Archivo no reconocido:", file)
 
-    keep_mp3 = input("Do you want to keep MP3 files? (yes/no): ").lower().strip() == 'yes'
-    keep_ogg = input("Do you want to keep OGG files? (yes/no): ").lower().strip() == 'yes'
-    for file in temp:
+    # Imprimir información sobre archivos MP3
+    print("\nArchivos MP3:")
+    print("Cantidad de archivos MP3:", mp3Quantity)
+    print("Tamaño total de archivos MP3:", round(mp3TotalSize, 2), "MB")
+
+    # Imprimir información sobre archivos OGG
+    print("\nArchivos OGG:")
+    print("Cantidad de archivos OGG:", oggQuantity)
+    print("Tamaño total de archivos OGG:", round(oggTotalSize, 2), "MB")
+
+
+    # Preguntar al usuario si desea mantener archivos MP3 y OGG
+    keep_mp3 = input("\n¿Desea mantener los archivos MP3? (yes/no): ").lower().strip() == 'yes'
+    keep_ogg = input("¿Desea mantener los archivos OGG? (yes/no): ").lower().strip() == 'yes'
+
+    # Eliminar archivos según la selección del usuario
+    for file in os.listdir(output_folder):
         file_path = os.path.join(output_folder, file)
         file_extension = os.path.splitext(file)[1]
         if file_extension == '.mp3' and not keep_mp3:
             os.remove(file_path)
         elif file_extension == '.ogg' and not keep_ogg:
             os.remove(file_path)
-    print("Operation completed")
+
+    print("\nOperación completada.")
