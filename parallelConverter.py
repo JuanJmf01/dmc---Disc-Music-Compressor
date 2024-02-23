@@ -36,9 +36,6 @@ class ParallelConverter:
             output_files.append((file, output_file_ogg))
         
 
-        print("outputs : {}".format(output_files))
- 
-      
         # `process.starmap(self.music_converter.convert_file, output_files)` is using the `starmap`
         # method of the `Pool` object to apply the `self.music_converter.convert_file` function to
         # each pair of arguments in the `output_files` list.

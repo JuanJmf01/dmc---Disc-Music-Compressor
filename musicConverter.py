@@ -18,10 +18,6 @@ class MusicConverter:
         :param output_file: The `output_file` parameter is the file path where the converted file will be
         saved after the conversion process is completed
         """
-    
-
-        print("input_file: {}".format(input_file))
-        print("output_file: {}".format(output_file))
 
         command = ['ffmpeg', '-i', input_file, output_file]
         sub.run(command)

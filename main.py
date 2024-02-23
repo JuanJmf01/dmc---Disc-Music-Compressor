@@ -23,11 +23,11 @@ def select_file(prompt):
 
 if __name__ == "__main__":
     while True:
-        user_choice = input("Seleccione una opción:\n  1. Seleccionar un archivo\n  2. Seleccionar una carpeta\nOpción: ")
+        user_choice = input("Seleccione una opcion:\n  1. Seleccionar un archivo\n  2. Seleccionar una carpeta\nOpcion: ")
         if user_choice in ['1', '2']:
             break
         else:
-            print("Opción no válida. Por favor, seleccione 1 o 2.")
+            print("Opcion no válida. Por favor, seleccione 1 o 2.")
     
     dir_list = []
     if user_choice == '1':
